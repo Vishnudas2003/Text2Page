@@ -9,14 +9,8 @@ def create_html_from_txt(input_file, output_dir):
     # Read the content of the input .txt file
     with open(input_file, 'r', encoding='utf-8') as txt_file:
         txt_content = txt_file.read()
-
-    # Split the text into paragraphs based on blank lines
     paragraphs = txt_content.split('\n\n')
-
-    # Extract the filename from the input path
     filename = os.path.basename(input_file).replace('.txt', '')
-
-    # Generate the HTML content
     html_content = f'''<!doctype html>
 <html lang="en">
 <head>
@@ -26,14 +20,9 @@ def create_html_from_txt(input_file, output_dir):
 </head>
 <body>
 '''
-
-    # Wrap each paragraph in <p> tags and add to the HTML content
     for paragraph in paragraphs:
         html_content += f'  <p>{paragraph}</p>\n'
-
-    html_content += '</body>\n</html>\n'
-
-    # Create the output directory if it doesn't exist
+        html_content += '</body>\n</html>\n'
     os.makedirs(output_dir, exist_ok=True)
 
     # Determine the output HTML file path
@@ -63,7 +52,7 @@ def main():
     parser = argparse.ArgumentParser(description='Process .txt files to .html with Text2page')
     parser.add_argument('path', nargs='?', help='path to the file or folder to be processed')
     parser.add_argument('--version', '-v', action='store_true', help='print the tool\'s name and version')
-    parser.add_argument('--output', '-o', default='./til', help='Specify a different output directory (default: ./til)')
+    parser.add_argument('--output', '-o', default='./text2page', help='Specify a different output directory (default: ./text2page)')
 
     args = parser.parse_args()
 
@@ -79,7 +68,7 @@ def main():
         print(f"Error: {args.path} does not exist.")
         return
 
-    # Remove the existing 'til' folder if it exists
+    # Remove the existing 'text2page' folder if it exists
     if os.path.exists(args.output):
         shutil.rmtree(args.output)
 
