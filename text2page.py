@@ -11,46 +11,6 @@ def create_html_from_txt(input_file, output_dir, stylesheet_url=None):
         txt_content = txt_file.read()
     paragraphs = txt_content.split('\n\n')
     filename = os.path.basename(input_file).replace('.txt', '')
-
-    title_lines = txt_content.strip().split('\n')
-    if len(title_lines) >= 3 and not title_lines[0] and not title_lines[1] and not title_lines[2]:
-        title = title_lines[0]
-    else:
-        title = filename
-
-    html_content = f'''<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>{title}</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  '''
-  
-    if stylesheet_url:
-        html_content += f'<link rel="stylesheet" href="{stylesheet_url}">\n'
-    
-    html_content += '</head>\n<body>\n<h1>{title}</h1>\n'
-    
-    for paragraph in paragraphs:
-        html_content += f'  <p>{paragraph}</p>\n'
-    
-    html_content += '</body>\n</html>\n'
-    
-    os.makedirs(output_dir, exist_ok=True)
-    
-    # Determine the output HTML file path
-    output_file = os.path.join(output_dir, f'{filename}.html')
-    
-    # Write the HTML content to the output file
-    with open(output_file, 'w', encoding='utf-8') as html_file:
-        html_file.write(html_content)
-    
-    print(f'Converted {input_file} to {output_file}')
-    # Read the content of the input .txt file
-    with open(input_file, 'r', encoding='utf-8') as txt_file:
-        txt_content = txt_file.read()
-    paragraphs = txt_content.split('\n\n')
-    filename = os.path.basename(input_file).replace('.txt', '')
     
     title_lines = txt_content.strip().split('\n')
     if len(title_lines) >= 3 and not title_lines[0] and not title_lines[1] and not title_lines[2]:
@@ -64,7 +24,7 @@ def create_html_from_txt(input_file, output_dir, stylesheet_url=None):
   <meta charset="utf-8">
   <title>{title}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 
   '''
     if stylesheet_url:
