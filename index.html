@@ -5,13 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Text2Page Output</title>
     <link rel="stylesheet" href="style.css">
+    <title>Text2Page Output</title>
+    
+    <script>
+        // Define the directory where your Text2Page output HTML files are located
+        const outputDir = "./text2page";
+
+        // Function to fetch and display Text2Page output links
+        function displayOutputLinks() {
+            // Get the ul element where links will be inserted
+            const outputList = document.getElementById("outputList");
+
+            // Fetch a list of files in the output directory
+            fetch(outputDir)
+                .then((response) => response.text())
+                .then((text) => {
+                    // Parse the directory listing HTML to extract filenames
+                    const filenames = Array.from(text.matchAll(/<a href="([^"]+)">/g), (match) => match[1]);
+
+                    // Create links for each filename
+                    filenames.forEach((filename) => {
+                        const link = document.createElement("a");
+                        link.href = `${outputDir}/${filename}`;
+                        link.textContent = filename;
+                        const listItem = document.createElement("li");
+                        listItem.appendChild(link);
+                        outputList.appendChild(listItem);
+                    });
+                })
+                .catch((error) => {
+                    console.error("Error fetching Text2Page output:", error);
+                });
+        }
+
+        // Call the function to display the links when the page loads
+        document.addEventListener("DOMContentLoaded", displayOutputLinks);
+    </script>
 </head>
-<body>
+<body class="main">
     <header>
         <h1><a href="https://github.com/Vishnudas2003/Text2Page">Text2Page</a> Output</h1>
     </header>
+    <h2>Example</h2>
     <main>
-        <!-- JavaScript will dynamically generate links here -->
         <ul id="outputList">
             <!-- Links will be added here -->
         </ul>
