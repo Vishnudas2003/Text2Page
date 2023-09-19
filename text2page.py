@@ -48,6 +48,8 @@ def create_html_from_txt(input_file, output_dir, stylesheet_url=None):
     
     print(f'Converted {input_file} to {output_file}')
 
+    
+
 def process_input(input_path, output_dir, stylesheet_url=None):
     if os.path.isfile(input_path) and input_path.endswith('.txt'):
         create_html_from_txt(input_path, output_dir, stylesheet_url)
