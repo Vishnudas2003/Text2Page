@@ -76,16 +76,6 @@ python text2page.py --version
 ```
 
 ## Features
-### Horizontal Rule
-
-To add a horizontal rule, use three or more hyphens (---), asterisks (***), or underscores (___) on a line by themselves. For example:
-
-```bash
----
-This is a horizontal rule.
-```
-This will be converted to an HTML <hr> tag in the generated HTML.
-
 ### Inline `<code>` Blocks
 
 Text2page now supports inline <code> blocks in Markdown. To include inline code in your Markdown document, enclose the code within single backticks. For example:
