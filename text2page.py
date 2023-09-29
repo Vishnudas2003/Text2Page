@@ -1,9 +1,32 @@
 import argparse
 import os
 import shutil
+import markdown2
 
 # Define the version number
 VERSION = "1.0.0"  # Replace with your actual version number
+
+def create_html_from_markdown(input_file, output_dir, stylesheet_url=None):
+    # Read the content of the input .txt or .md file
+    with open(input_file, 'r', encoding='utf-8') as file:
+        content = file.read()
+
+     # Replace horizontal rules (---) with <hr> tags
+    content = content.replace('---', '<hr>')
+    # Convert Markdown to HTML
+    html_content = markdown2.markdown(content)
+
+    # Determine the output HTML file path
+    filename = os.path.basename(input_file).replace('.md', '')  # Remove file extension
+    output_file = os.path.join(output_dir, f'{filename}.html')
+
+    os.makedirs(output_dir, exist_ok=True)
+    
+    # Write the HTML content to the output file
+    with open(output_file, 'w', encoding='utf-8') as html_file:
+        html_file.write(html_content)
+
+    print(f'Converted {input_file} to {output_file}')    
 
 def create_html_from_txt(input_file, output_dir, stylesheet_url=None):
     # Read the content of the input .txt file
@@ -48,15 +71,22 @@ def create_html_from_txt(input_file, output_dir, stylesheet_url=None):
     
     print(f'Converted {input_file} to {output_file}')
 
-    
+def create_html_from_file(input_file, output_dir, stylesheet_url=None):
+    _, extension = os.path.splitext(input_file)
+    if extension.lower() == '.txt':
+        create_html_from_txt(input_file, output_dir, stylesheet_url)
+    elif extension.lower() == '.md':
+        create_html_from_markdown(input_file, output_dir, stylesheet_url)
+    else:
+        print(f"Unsupported file type: {extension}")
 
 def process_input(input_path, output_dir, stylesheet_url=None):
-    if os.path.isfile(input_path) and input_path.endswith('.txt'):
-        create_html_from_txt(input_path, output_dir, stylesheet_url)
+    if os.path.isfile(input_path):
+        create_html_from_file(input_path, output_dir, stylesheet_url)
     elif os.path.isdir(input_path):
         process_directory(input_path, output_dir, stylesheet_url)
     else:
-        print(f"Error: {input_path} is not a valid .txt file or directory.")
+        print(f"Error: {input_path} is not a valid .txt or .md file or directory.")
 
 def process_directory(input_dir, output_dir, stylesheet_url=None):
     for root, dirs, files in os.walk(input_dir):
@@ -65,7 +95,7 @@ def process_directory(input_dir, output_dir, stylesheet_url=None):
                 create_html_from_txt(os.path.join(root, file), output_dir, stylesheet_url)
 
 def main():
-    parser = argparse.ArgumentParser(description='Process .txt files to .html with Text2page')
+    parser = argparse.ArgumentParser(description='Process .txt or .md files to .html with Text2page')
     parser.add_argument('path', nargs='?', help='path to the file or folder to be processed')
     parser.add_argument('--version', '-v', action='store_true', help='print the tool\'s name and version')
     parser.add_argument('--output', '-o', default='./text2page', help='Specify a different output directory (default: ./text2page)')
