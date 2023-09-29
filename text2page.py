@@ -1,10 +1,29 @@
 import argparse
 import os
 import shutil
+import markdown2
 
 # Define the version number
 VERSION = "1.0.0"  # Replace with your actual version number
+def create_html_from_markdown(input_file, output_dir, stylesheet_url=None):
+    # Read the content of the input .txt or .md file
+    with open(input_file, 'r', encoding='utf-8') as file:
+        content = file.read()
 
+    # Convert Markdown to HTML
+    html_content = markdown2.markdown(content)
+
+    # Determine the output HTML file path
+    filename = os.path.basename(input_file).replace('.md', '')  # Remove file extension
+    output_file = os.path.join(output_dir, f'{filename}.html')
+
+    os.makedirs(output_dir, exist_ok=True)
+    
+    # Write the HTML content to the output file
+    with open(output_file, 'w', encoding='utf-8') as html_file:
+        html_file.write(html_content)
+
+    print(f'Converted {input_file} to {output_file}')  
 def create_html_from_txt(input_file, output_dir, stylesheet_url=None):
     # Read the content of the input .txt file
     with open(input_file, 'r', encoding='utf-8') as txt_file:
