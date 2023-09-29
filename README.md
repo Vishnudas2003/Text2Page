@@ -52,6 +52,14 @@ python text2page.py /path/to/your/directory
 ```
 This command will process all .txt files within the specified directory.
 
+## Markdown Feature
+Text2page includes support for Markdown. It can convert Markdown (.md) files to HTML. Simply provide a Markdown file as input, and Text2page will generate an HTML file with the same content.
+
+```bash
+python text2page.py /path/to/your/file.md
+```
+Replace /path/to/your/file.md with the actual path to your .md file.
+
 ### Specifyig Output Directory
 By default, Text2page will create an output directory named til in the project directory. You can specify a different output directory using the --output or -o flag. For example:
 
