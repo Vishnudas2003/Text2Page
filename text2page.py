@@ -2,6 +2,7 @@ import argparse
 import os
 import shutil
 import markdown2
+import markdown2
 
 # Define the version number
 VERSION = "1.0.0"  # Replace with your actual version number
