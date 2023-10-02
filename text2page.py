@@ -2,6 +2,7 @@ import argparse
 import os
 import shutil
 import markdown2
+import re
 
 # Define the version number
 VERSION = "0.0.1"  # Replace with your actual version number
@@ -11,6 +12,10 @@ def create_html_from_markdown(input_file, output_dir, stylesheet_url=None):
     with open(input_file, 'r', encoding='utf-8') as file:
         content = file.read()
 
+    # Convert Markdown to HTML
+    # Replace '---' with an HTML <hr> tag
+    content = re.sub(r'---', '<hr>', content)
+    
     # Convert Markdown to HTML
     html_content = markdown2.markdown(content)
 

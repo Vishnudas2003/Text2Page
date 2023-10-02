@@ -1,3 +1,5 @@
+This is some text above the horizontal rule.
+
 ---
 
-This is a horizontal rule.
+And this is some text below the horizontal rule.
