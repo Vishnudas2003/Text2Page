@@ -12,10 +12,7 @@ def create_html_from_markdown(input_file, output_dir, stylesheet_url=None):
     with open(input_file, 'r', encoding='utf-8') as file:
         content = file.read()
 
-
-
-
-    # Add support for inline code using backticks
+    # Convert Markdown to HTML to Markdown
     content = re.sub(r'`([^`]+)`', r'<code>\1</code>', content)
     # Convert Markdown to HTML
     # Replace '---' with an HTML <hr> tag
