@@ -83,7 +83,9 @@ Text2page now supports horizontal rules in Markdown. To create a horizontal rule
 #### Example
 Input Markdown:
 
-This is some text above the horizontal rule.
+---
+
+This is some text below the horizontal rule.
 
 ---
 
