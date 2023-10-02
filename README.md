@@ -76,6 +76,18 @@ python text2page.py --version
 ```
 
 ## Features
+### Horizontal Rules
+
+Text2page now supports horizontal rules in Markdown. To create a horizontal rule, use three or more hyphens, asterisks, or underscores, separated by spaces (e.g., ---, ***, or ___) in your Markdown content. When Text2page encounters a horizontal rule in the Markdown content, it will replace it with an HTML <hr> tag.
+
+#### Example
+Input Markdown:
+
+This is some text above the horizontal rule.
+
+---
+
+And this is some text below the horizontal rule.
 
 
 ### Help and Usage Information
