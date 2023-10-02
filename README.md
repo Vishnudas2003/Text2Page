@@ -98,6 +98,8 @@ Here is an example of inline code: `code`.
 
 To convert a .md file with inline code to HTML, use the following command:
 
+code: `hello world`
+
 ```bash
 python text2page.py /path/to/your/file.md
 ```
