@@ -4,7 +4,8 @@ import shutil
 import markdown2
 
 # Define the version number
-VERSION = "1.0.0"  # Replace with your actual version number
+VERSION = "0.0.1"  # Replace with your actual version number
+
 def create_html_from_markdown(input_file, output_dir, stylesheet_url=None):
     # Read the content of the input .txt or .md file
     with open(input_file, 'r', encoding='utf-8') as file:

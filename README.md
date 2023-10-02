@@ -76,14 +76,7 @@ python text2page.py --version
 ```
 
 ## Features
-### Inline `<code>` Blocks
 
-Text2page now supports inline <code> blocks in Markdown. To include inline code in your Markdown document, enclose the code within single backticks. For example:
-
-```bash
-This is an `inline code block`.
-```
-This will be converted to an HTML <code> tag in the generated HTML.
 
 ### Help and Usage Information
 To view the help and usage information, use the --help or -h flag:
