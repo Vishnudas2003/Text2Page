@@ -3,6 +3,7 @@ import os
 import shutil
 import markdown2
 import re
+import tomllib
 
 # Define the version number
 VERSION = "0.0.1"  # Replace with your actual version number
@@ -106,6 +107,7 @@ def main():
     parser.add_argument('--version', '-v', action='store_true', help='print the tool\'s name and version')
     parser.add_argument('--output', '-o', default='./text2page', help='Specify a different output directory (default: ./text2page)')
     parser.add_argument('--stylesheet', '-s', help='URL to a CSS stylesheet for styling the HTML')
+    parser.add_argument("--config", "-c", metavar="<config.toml>", help="If you want to use a TOML config file to set the arguments needed for the program")
 
     args = parser.parse_args()
     
