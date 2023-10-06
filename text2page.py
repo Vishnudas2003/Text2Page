@@ -1,6 +1,8 @@
 import argparse
 import os
 import shutil
+import sys
+
 import markdown2
 import re
 import tomllib
@@ -110,7 +112,7 @@ def main():
     parser.add_argument("--config", "-c", metavar="<config.toml>", help="If you want to use a TOML config file to set the arguments needed for the program")
 
     args = parser.parse_args()
-    
+
     if args.version:
         print("Text2page Tool Version", VERSION)
         return
@@ -127,7 +129,23 @@ def main():
     if os.path.exists(args.output):
         shutil.rmtree(args.output)
 
-    process_input(args.path, args.output, args.stylesheet)
+    if (args.config):
+        with open(args.config, "rb") as toml_config:
+            try:
+                toml_dict = tomllib.load(toml_config)
+            except tomllib.TOMLDecodeError as err:  # Will throw exception if the TOMl is incorrectly formatted
+                print(f"There was a problem decoding your TOML file: {err}")
+                sys.exit(-1)  # exit with non zero code
+            try:
+                output = toml_dict["output"] or "./text2page"
+                stylesheet = toml_dict["stylesheet"] or "./style.css"
+            except KeyError as err: # Will throw an exception if there are any keys missing in the TOML file
+                print(f"Error: {err} was not found in your TOML file")
+                sys.exit(-1)
+            process_input(args.path, output, stylesheet)
+
+    else:
+        process_input(args.path, args.output, args.stylesheet)
 
 if __name__ == "__main__":
     main()
