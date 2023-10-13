@@ -111,7 +111,7 @@ def main():
     args = parser.parse_args()
 
     if args.version:
-        print("Text2page Tool Version", VERSION)
+        print("Text2page Tool Version 0.02", )
         return
 
     if not args.path:
