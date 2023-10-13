@@ -1,9 +1,6 @@
+# This is a paragraph of text with some `inline code` elements.
 
-
-
-This is a paragraph of text with some `inline code` elements.
-
-Here's an example of a fenced code block:
+# Here's an example of a fenced code block:
 
 ```python
 def hello_world():

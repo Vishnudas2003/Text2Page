@@ -2,90 +2,64 @@ import argparse
 import os
 import shutil
 import sys
-
 import markdown2
 import re
 import tomllib
 
-# Define the version number
-VERSION = "0.0.1"  # Replace with your actual version number
-
-def create_html_from_markdown(input_file, output_dir, stylesheet_url=None):
-    # Read the content of the input .txt or .md file
-    with open(input_file, 'r', encoding='utf-8') as file:
-        content = file.read()
-
-    # Convert Markdown to HTML to Markdown.
-    content = re.sub(r'`([^`]+)`', r'<code>\1</code>', content)
-    # Convert Markdown to HTML
-    # Replace '---' with an HTML <hr> tag
-    content = re.sub(r'---', '<hr>', content)
-    
-    # Convert Markdown to HTML
-    html_content = markdown2.markdown(content)
-
-    # Determine the output HTML file path
-    filename = os.path.basename(input_file).replace('.md', '')  # Remove file extension
-    output_file = os.path.join(output_dir, f'{filename}.html')
-
-    os.makedirs(output_dir, exist_ok=True)
-    
-    # Write the HTML content to the output file
-    with open(output_file, 'w', encoding='utf-8') as html_file:
-        html_file.write(html_content)
-
-    print(f'Converted {input_file} to {output_file}')  
-def create_html_from_txt(input_file, output_dir, stylesheet_url=None):
-    # Read the content of the input .txt file
-    with open(input_file, 'r', encoding='utf-8') as txt_file:
-        txt_content = txt_file.read()
-    paragraphs = txt_content.split('\n\n')
-    filename = os.path.basename(input_file).replace('.txt', '')
-    
-    title_lines = txt_content.strip().split('\n')
-    if len(title_lines) >= 3 and not title_lines[0] and not title_lines[1] and not title_lines[2]:
-        title = title_lines[0]
-    else:
-        title = filename  
-
-    html_content = f'''<!doctype html>
+def generate_html_content(title, content, stylesheet_url=None):
+    final_html_content = f'''<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <title>{title}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>{title}</h1>
+'''
 
-  '''
-    if stylesheet_url:
-        html_content += f'<link rel="stylesheet" href="{stylesheet_url}">\n'
-    
-    html_content += '</head>\n<body>\n<h1>{title}</h1>\n'
-    
-    for paragraph in paragraphs:
-        html_content += f'  <p>{paragraph}</p>\n'
-    
-    html_content += '</body>\n</html>\n'
-    
-    os.makedirs(output_dir, exist_ok=True)
-    
-    # Determine the output HTML file path
-    output_file = os.path.join(output_dir, f'{filename}.html')
-    
-    # Write the HTML content to the output file
-    with open(output_file, 'w', encoding='utf-8') as html_file:
-        html_file.write(html_content)
-    
-    print(f'Converted {input_file} to {output_file}')
+    for paragraph in content:
+        final_html_content += f'  <p>{paragraph}</p>\n'
+
+    final_html_content += '</body>\n</html>\n'
+
+    return final_html_content
 
 def create_html_from_file(input_file, output_dir, stylesheet_url=None):
     _, extension = os.path.splitext(input_file)
+    with open(input_file, 'r', encoding='utf-8') as file:
+        input_content = file.read()
+
     if extension.lower() == '.txt':
-        create_html_from_txt(input_file, output_dir, stylesheet_url)
+        parsed_content = input_content.split('\n\n')
+        output_filename = os.path.basename(input_file).replace('.txt', '')
     elif extension.lower() == '.md':
-        create_html_from_markdown(input_file, output_dir, stylesheet_url)
+        parsed_content = re.sub(r'`([^`]+)`', r'<code>\1</code>', input_content)
+        parsed_content = re.sub(r'---', '<hr>', parsed_content)
+        parsed_content = markdown2.markdown(parsed_content)
+        output_filename = os.path.basename(input_file).replace('.md', '')
     else:
         print(f"Unsupported file type: {extension}")
+        return
+
+    file_lines = input_content.strip().split('\n')
+    if len(file_lines) >= 3 and not file_lines[0] and not file_lines[1] and not file_lines[2]:
+        title = file_lines[0]
+    else:
+        title = output_filename
+
+    final_html_content = generate_html_content(title, parsed_content, stylesheet_url)
+
+    os.makedirs(output_dir, exist_ok=True)
+
+    output_file = os.path.join(output_dir, f'{output_filename}.html')
+
+    with open(output_file, 'w', encoding='utf-8') as html_file:
+        html_file.write(final_html_content)
+
+    print(f'Converted {input_file} to {output_file}')
+
 def process_input(input_path, output_dir, stylesheet_url=None):
     if os.path.isfile(input_path):
         create_html_from_file(input_path, output_dir, stylesheet_url)
@@ -98,7 +72,7 @@ def process_directory(input_dir, output_dir, stylesheet_url=None):
     for root, dirs, files in os.walk(input_dir):
         for file in files:
             if file.endswith('.txt'):
-                create_html_from_txt(os.path.join(root, file), output_dir, stylesheet_url)
+                create_html_from_file(os.path.join(root, file), output_dir, stylesheet_url)
 
 def main():
     parser = argparse.ArgumentParser(description='Process .txt or .md files to .html with Text2page')
@@ -111,7 +85,7 @@ def main():
     args = parser.parse_args()
 
     if args.version:
-        print("Text2page Tool Version", VERSION)
+        print("Text2page Tool Version 0.02")
         return
 
     if not args.path:
@@ -130,17 +104,16 @@ def main():
         with open(args.config, "rb") as toml_config:
             try:
                 toml_dict = tomllib.load(toml_config)
-            except tomllib.TOMLDecodeError as err:  # Will throw exception if the TOMl is incorrectly formatted
+            except tomllib.TOMLDecodeError as err:
                 print(f"There was a problem decoding your TOML file: {err}")
-                sys.exit(-1)  # exit with non zero code
+                sys.exit(-1)
             try:
                 output = toml_dict["output"] or "./text2page"
                 stylesheet = toml_dict["stylesheet"] or "./style.css"
-            except KeyError as err: # Will throw an exception if there are any keys missing in the TOML file
+            except KeyError as err:
                 print(f"Error: {err} was not found in your TOML file")
                 sys.exit(-1)
             process_input(args.path, output, stylesheet)
-
     else:
         process_input(args.path, args.output, args.stylesheet)
 
