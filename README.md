@@ -60,7 +60,7 @@ python text2page.py /path/to/your/file.md
 ```
 Replace /path/to/your/file.md with the actual path to your .md file.
 
-### Specifyig Output Directory
+### Specifying Output Directory
 By default, Text2page will create an output directory named til in the project directory. You can specify a different output directory using the --output or -o flag. For example:
 
 ```bash
@@ -74,6 +74,13 @@ To check the version of Text2page, use the --version or -v flag:
 ```bash
 python text2page.py --version
 ```
+
+## TOML Feature
+Text2page includes support for TOML files. Meaning that you can create a TOML file to bypass entering a long list of optional arguments into your command line. In your TOML file, you are able to specify both the output directory and stylesheet you like to use and Text2page will apply those arguments to the program. You can specify that you want to use a TOML config file by using the --config or -c flag. For example:
+```bash
+python text2page.py /path/to/your/file or directory --config /path/to/your/toml.config
+```
+Replace /path/to/your/file with your .txt or .md file or replace it with a directory containing the .txt or .md files. 
 
 ## Features
 ### Horizontal Rules
