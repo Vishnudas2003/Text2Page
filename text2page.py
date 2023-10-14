@@ -7,7 +7,7 @@ import re
 import tomllib
 
 def generate_html_content(title, content, stylesheet_url=None):
-    html_content = f'''<!doctype html>
+    final_html_content = f'''<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -20,43 +20,43 @@ def generate_html_content(title, content, stylesheet_url=None):
 '''
 
     for paragraph in content:
-        html_content += f'  <p>{paragraph}</p>\n'
+        final_html_content += f'  <p>{paragraph}</p>\n'
 
-    html_content += '</body>\n</html>\n'
+    final_html_content += '</body>\n</html>\n'
 
-    return html_content
+    return final_html_content
 
 def create_html_from_file(input_file, output_dir, stylesheet_url=None):
     _, extension = os.path.splitext(input_file)
     with open(input_file, 'r', encoding='utf-8') as file:
-        file_content = file.read()
+        input_content = file.read()
 
     if extension.lower() == '.txt':
-        content = file_content.split('\n\n')
-        filename = os.path.basename(input_file).replace('.txt', '')
+        parsed_content = input_content.split('\n\n')
+        output_filename = os.path.basename(input_file).replace('.txt', '')
     elif extension.lower() == '.md':
-        content = re.sub(r'`([^`]+)`', r'<code>\1</code>', file_content)
-        content = re.sub(r'---', '<hr>', content)
-        content = markdown2.markdown(content)
-        filename = os.path.basename(input_file).replace('.md', '')
+        parsed_content = re.sub(r'`([^`]+)`', r'<code>\1</code>', input_content)
+        parsed_content = re.sub(r'---', '<hr>', parsed_content)
+        parsed_content = markdown2.markdown(parsed_content)
+        output_filename = os.path.basename(input_file).replace('.md', '')
     else:
         print(f"Unsupported file type: {extension}")
         return
 
-    title_lines = file_content.strip().split('\n')
-    if len(title_lines) >= 3 and not title_lines[0] and not title_lines[1] and not title_lines[2]:
-        title = title_lines[0]
+    file_lines = input_content.strip().split('\n')
+    if len(file_lines) >= 3 and not file_lines[0] and not file_lines[1] and not file_lines[2]:
+        title = file_lines[0]
     else:
-        title = filename
+        title = output_filename
 
-    html_content = generate_html_content(title, content, stylesheet_url)
+    final_html_content = generate_html_content(title, parsed_content, stylesheet_url)
 
     os.makedirs(output_dir, exist_ok=True)
 
-    output_file = os.path.join(output_dir, f'{filename}.html')
+    output_file = os.path.join(output_dir, f'{output_filename}.html')
 
     with open(output_file, 'w', encoding='utf-8') as html_file:
-        html_file.write(html_content)
+        html_file.write(final_html_content)
 
     print(f'Converted {input_file} to {output_file}')
 
