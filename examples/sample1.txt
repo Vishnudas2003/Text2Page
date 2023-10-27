@@ -1,5 +1,15 @@
-Hello everyone
+sample1
+Sample Text2page Test .txt File
 
-Welcome to the sample text 
+This is a sample text file that contains a code block for testing syntax highlighting.
 
-This is a sample text for the sample text
+Python Code
+
+Here's a Python code block:
+
+<pre><code>
+def hello_world():
+    print("Hello, World!")
+
+hello_world()
+</code></pre>

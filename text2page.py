@@ -2,7 +2,7 @@ import argparse
 import os
 import shutil
 import sys
-import markdown2
+import markdown
 import re
 import tomllib
 
@@ -17,12 +17,10 @@ def generate_html_content(title, content, stylesheet_url=None):
 </head>
 <body>
 <h1>{title}</h1>
+{content}
+</body>
+</html>
 '''
-
-    for paragraph in content:
-        final_html_content += f'  <p>{paragraph}</p>\n'
-
-    final_html_content += '</body>\n</html>\n'
 
     return final_html_content
 
@@ -32,22 +30,18 @@ def create_html_from_file(input_file, output_dir, stylesheet_url=None):
         input_content = file.read()
 
     if extension.lower() == '.txt':
-        parsed_content = input_content.split('\n\n')
+        parsed_content = input_content
         output_filename = os.path.basename(input_file).replace('.txt', '')
     elif extension.lower() == '.md':
-        parsed_content = re.sub(r'`([^`]+)`', r'<code>\1</code>', input_content)
-        parsed_content = re.sub(r'---', '<hr>', parsed_content)
-        parsed_content = markdown2.markdown(parsed_content)
+        parsed_content = input_content
         output_filename = os.path.basename(input_file).replace('.md', '')
     else:
         print(f"Unsupported file type: {extension}")
         return
 
-    file_lines = input_content.strip().split('\n')
-    if len(file_lines) >= 3 and not file_lines[0] and not file_lines[1] and not file_lines[2]:
-        title = file_lines[0]
-    else:
-        title = output_filename
+    title = output_filename
+    # Convert the Markdown content
+    parsed_content = markdown.markdown(parsed_content, extensions=['markdown.extensions.fenced_code'])
 
     final_html_content = generate_html_content(title, parsed_content, stylesheet_url)
 
@@ -77,7 +71,7 @@ def process_directory(input_dir, output_dir, stylesheet_url=None):
 def main():
     parser = argparse.ArgumentParser(description='Process .txt or .md files to .html with Text2page')
     parser.add_argument('path', nargs='?', help='path to the file or folder to be processed')
-    parser.add_argument('--version', '-v', action='store_true', help='print the tool\'s name and version')
+    parser.add_argument('--version', '-v', action='store_true', help="print the tool's name and version")
     parser.add_argument('--output', '-o', default='./text2page', help='Specify a different output directory (default: ./text2page)')
     parser.add_argument('--stylesheet', '-s', help='URL to a CSS stylesheet for styling the HTML')
     parser.add_argument("--config", "-c", metavar="<config.toml>", help="If you want to use a TOML config file to set the arguments needed for the program")
@@ -100,7 +94,7 @@ def main():
     if os.path.exists(args.output):
         shutil.rmtree(args.output)
 
-    if (args.config):
+    if args.config:
         with open(args.config, "rb") as toml_config:
             try:
                 toml_dict = tomllib.load(toml_config)
@@ -108,8 +102,8 @@ def main():
                 print(f"There was a problem decoding your TOML file: {err}")
                 sys.exit(-1)
             try:
-                output = toml_dict["output"] or "./text2page"
-                stylesheet = toml_dict["stylesheet"] or "./style.css"
+                output = toml_dict.get("output", "./text2page")
+                stylesheet = toml_dict.get("stylesheet", "./style.css")
             except KeyError as err:
                 print(f"Error: {err} was not found in your TOML file")
                 sys.exit(-1)

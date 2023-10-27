@@ -1,3 +1,5 @@
---------
+## Sample Markdown File
+---
+This is a sample Markdown file with code blocks for testing syntax highlighting.
 
-# Text2Page
+Here is an example of inline code: `def hello_world()`.
