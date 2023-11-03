@@ -41,6 +41,42 @@ If you'd like to contribute code to the project, please follow these steps:
 4. Commit your changes and push your branch to GitHub.
 5. Open a pull request from your branch to the master branch of the Text2page repository.
 
+### Adding Code Formatting (Black) and Static Analysis (Flake)
+
+We've recently introduced two essential tools to enhance the code quality and maintain consistency within the Text2page project.
+
+**Black**: We have integrated Black, a powerful code formatter for Python, to ensure that our codebase is consistently well-formatted. Black helps maintain code readability and adherence to Python style guidelines. Setting up Black is straightforward. Ensure you have it installed:
+   
+   ```bash
+   pip install black
+   ```
+Before submitting any code changes, it's important to run Black on your Python files. You can do this by executing the following command in your project directory:
+
+   ```bash
+   black .
+   ```
+This will automatically format your code according to Black's style guidelines.
+
+**Flake8**: For static code analysis and style checking, we've incorporated Flake8. Flake8 is a helpful tool that identifies potential issues in your code, including style violations and common programming mistakes. It enforces adherence to PEP 8 guidelines and can significantly improve code quality. To set up Flake8, install it using:
+
+   ```bash
+   pip install flake8
+   ```
+Before submitting your code changes, it's essential to run Flake8 to identify and address any style or quality issues in your Python code. You can run Flake8 with the following command:
+
+   ```bash
+   flake8 .
+   ```
+Address any issues reported by Flake8 to maintain high code quality standards.
+
+By integrating Black for code formatting and Flake8 for static analysis, we aim to ensure that Text2page's codebase remains clean, consistent, and easy to maintain. These tools not only enhance the project's quality but also make it easier for contributors to collaborate effectively.
+
+```
+This detailed paragraph explains the purpose of Black and Flake8, how to set them up, and why they are important for maintaining code quality in your Text2page project. You can add this paragraph to your `CONTRIBUTING.md` file to guide contributors in using these tools effectively.
+```
+
+
+
 ### Improving Documentation
 
 We appreciate contributions to our documentation. If you find areas that need improvement, please submit a pull request with your proposed changes.
