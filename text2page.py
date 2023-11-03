@@ -3,7 +3,6 @@ import os
 import shutil
 import sys
 import markdown
-import re
 import tomllib
 
 
@@ -100,7 +99,7 @@ def main():
         "--config",
         "-c",
         metavar="<config.toml>",
-        help="If you want to use a TOML config file to set the arguments needed for the program",
+        help="Use a TOML config file for program arguments",
     )
 
     args = parser.parse_args()
