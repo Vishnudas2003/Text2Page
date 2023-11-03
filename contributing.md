@@ -71,11 +71,6 @@ Address any issues reported by Flake8 to maintain high code quality standards.
 
 By integrating Black for code formatting and Flake8 for static analysis, we aim to ensure that Text2page's codebase remains clean, consistent, and easy to maintain. These tools not only enhance the project's quality but also make it easier for contributors to collaborate effectively.
 
-```
-This detailed paragraph explains the purpose of Black and Flake8, how to set them up, and why they are important for maintaining code quality in your Text2page project. You can add this paragraph to your `CONTRIBUTING.md` file to guide contributors in using these tools effectively.
-```
-
-
 
 ### Improving Documentation
 
