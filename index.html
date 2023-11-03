@@ -4,8 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Text2Page Output</title>
+    
+    <!-- Add Bootstrap CSS from a Content Delivery Network (CDN) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- Link to your external CSS file (style.css) -->
     <link rel="stylesheet" href="style.css">
-    <title>Text2Page Output</title>
+</head>
+<body class="bg-light">
+    <header class="bg-dark text-white p-4 text-center">
+        <h1><a href="https://github.com/Vishnudas2003/Text2Page" class="text-white">Text2Page Output</a></h1>
+    </header>
+    <div class="container mt-4">
+        <h2 class="mb-3">Example</h2>
+        <main>
+            <!-- Use Bootstrap's list group to display links -->
+            <ul id="outputList" class="list-group"></ul>
+        </main>
+    </div>
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2023 Vishnu Das Puthukudi</p>
+    </footer>
+    
+    <!-- Your JavaScript code goes here (if you have any) -->
+    
+    <!-- Add Bootstrap JavaScript and jQuery from a CDN for enhanced functionality -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     
     <script>
         // Define the directory where your Text2Page output HTML files are located
@@ -28,6 +54,7 @@
                         const link = document.createElement("a");
                         link.href = `${outputDir}/${filename}`;
                         link.textContent = filename;
+                        link.classList.add("list-group-item", "list-group-item-action"); // Add Bootstrap classes
                         const listItem = document.createElement("li");
                         listItem.appendChild(link);
                         outputList.appendChild(listItem);
@@ -41,19 +68,5 @@
         // Call the function to display the links when the page loads
         document.addEventListener("DOMContentLoaded", displayOutputLinks);
     </script>
-</head>
-<body class="main">
-    <header>
-        <h1><a href="https://github.com/Vishnudas2003/Text2Page">Text2Page</a> Output</h1>
-    </header>
-    <h2>Example</h2>
-    <main>
-        <ul id="outputList">
-            <!-- Links will be added here -->
-        </ul>
-    </main>
-    <footer>
-        <p>&copy; 2023 Vishnu Das Puthukudi</p>
-    </footer>
 </body>
 </html>
