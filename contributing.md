@@ -10,6 +10,7 @@ Thank you for your interest in contributing to Text2page. We welcome contributio
 - [Improving Documentation](#improving-documentation)
 - [Providing Feedback](#providing-feedback)
 - [Code of Conduct](#code-of-conduct)
+- [Testing](#testing)
 
 ## Setting up the Development Environment
 
@@ -72,6 +73,26 @@ Address any issues reported by Flake8 to maintain high code quality standards.
 By integrating Black for code formatting and Flake8 for static analysis, we aim to ensure that Text2page's codebase remains clean, consistent, and easy to maintain. These tools not only enhance the project's quality but also make it easier for contributors to collaborate effectively.
 
 
+## Testing
+
+Text2page relies on automated tests to ensure code quality and functionality. Before contributing, please take note of the following testing information:
+
+### Existing Testing Files
+
+We have two main testing files in the project:
+
+1. **`test_create_html.py`**: This file contains tests for the `create_html_from_file` function. It covers various scenarios, including different file types, empty input, missing files, and malformed input.
+
+2. **`test_core_functionality.py`**: This file tests the core functionality of the Text2page tool, including processing both individual files and entire directories. It ensures that the tool behaves as expected in different situations.
+
+### Running Tests
+
+Before submitting your pull request, make sure to run the existing tests:
+
+```bash
+python -m unittest
+
+
 ### Improving Documentation
 
 We appreciate contributions to our documentation. If you find areas that need improvement, please submit a pull request with your proposed changes.
@@ -81,6 +102,7 @@ We appreciate contributions to our documentation. If you find areas that need im
 If you have suggestions or feedback for the project, please feel free to contact us or discuss it in our community forums.
 
 #### Note: This CONTRIBUTING.md file is a work in progress, and we will be adding more details in future updates.
+
 ```
 You can save this content in a file named `CONTRIBUTING.md` in the root of your project, as instructed. This file provides clear instructions for potential contributors on how to set up the development environment, report issues, submit pull requests, improve documentation, and follow the project's code of conduct. It's important to keep this document up to date as your project evolves.
 ```
