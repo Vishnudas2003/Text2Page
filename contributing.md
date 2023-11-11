@@ -72,6 +72,7 @@ Address any issues reported by Flake8 to maintain high code quality standards.
 
 By integrating Black for code formatting and Flake8 for static analysis, we aim to ensure that Text2page's codebase remains clean, consistent, and easy to maintain. These tools not only enhance the project's quality but also make it easier for contributors to collaborate effectively.
 
+
 ## Testing
 
 Text2page relies on automated tests to ensure code quality and functionality. Before contributing, please take note of the following testing information:
@@ -91,10 +92,11 @@ Before submitting your pull request, make sure to run the existing tests:
 ```bash
 python -m unittest
 
+
 ### Improving Documentation
 
 We appreciate contributions to our documentation. If you find areas that need improvement, please submit a pull request with your proposed changes.
-```
+
 ### Providing Feedback
 
 If you have suggestions or feedback for the project, please feel free to contact us or discuss it in our community forums.

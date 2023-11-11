@@ -1,26 +1,63 @@
 /* style.css */
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  h1 {
-    color: #333;
-  }
-  
-  p {
-    line-height: 1.6;
-    color: #666;
-  }
-  
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px; /* Add rounded corners */
+}
+
+h1 {
+  color: #007bff; /* Blue header text */
+  margin-top: 0; /* Remove default margin for the heading */
+}
+
+h2 {
+  color: #343a40; /* Dark gray for section headers */
+}
+
+p {
+  line-height: 1.6;
+  color: #6c757d; /* Slightly darker gray text */
+}
+
+ul.list-group {
+  padding: 0; /* Remove default padding for the list group */
+}
+
+.list-group-item {
+  border: none; /* Remove borders from list items */
+  padding: 10px 0; /* Add padding to the list items */
+  color: #007bff; /* Blue text for list items */
+  transition: background-color 0.2s; /* Add hover effect */
+}
+
+.list-group-item:hover {
+  background-color: #f8f9fa; /* Light gray background on hover */
+}
+
+footer {
+  background-color: #343a40; /* Dark gray footer background */
+  color: #ffffff; /* White footer text */
+  text-align: center;
+  padding: 10px 0;
+}
+
+a {
+  color: #007bff; /* Blue links */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline; /* Underline links on hover */
+}
