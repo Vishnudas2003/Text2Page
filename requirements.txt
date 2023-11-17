@@ -1,0 +1,4 @@
+markdown==3.3.4
+argparse==1.4.0
+flake8==4.0.1
+black==19.10b0
