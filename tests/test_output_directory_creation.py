@@ -1,7 +1,7 @@
 import os
 import unittest
 import shutil
-import toml as tomllib
+import toml 
 from text2page import process_input
 
 class TestOutputDirectoryCreation(unittest.TestCase):
