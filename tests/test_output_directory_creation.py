@@ -5,7 +5,7 @@ from text2page import process_input
 
 class TestOutputDirectoryCreation(unittest.TestCase):
     def setUp(self):
-        # Set up any necessary configurations or common resources
+        # Set up any necessary configurations or common resources 
         self.output_dir = os.path.join(os.path.dirname(__file__), "test_output")
 
     def tearDown(self):
