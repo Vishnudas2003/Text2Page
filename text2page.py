@@ -1,10 +1,13 @@
 import argparse
+import logging
 import os
 import shutil
 import sys
 import markdown
 import tomllib
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 def generate_html_content(title, content, stylesheet_url=None):
     final_html_content = f"""<!doctype html>
@@ -24,7 +27,6 @@ def generate_html_content(title, content, stylesheet_url=None):
 
     return final_html_content
 
-
 def create_html_from_file(input_file, output_dir, stylesheet_url=None):
     _, extension = os.path.splitext(input_file)
     with open(input_file, "r", encoding="utf-8") as file:
@@ -37,7 +39,7 @@ def create_html_from_file(input_file, output_dir, stylesheet_url=None):
         parsed_content = input_content
         output_filename = os.path.basename(input_file).replace(".md", "")
     else:
-        print(f"Unsupported file type: {extension}")
+        logger.error(f"Unsupported file type: {extension}")
         return
 
     title = output_filename
@@ -48,15 +50,18 @@ def create_html_from_file(input_file, output_dir, stylesheet_url=None):
 
     final_html_content = generate_html_content(title, parsed_content, stylesheet_url)
 
-    os.makedirs(output_dir, exist_ok=True)
+    # Print the output directory for debugging
+    print("Output Directory:", output_dir)
+    
+    absolute_output_dir = os.path.abspath(output_dir)
+    os.makedirs(absolute_output_dir, exist_ok=True)
 
     output_file = os.path.join(output_dir, f"{output_filename}.html")
 
     with open(output_file, "w", encoding="utf-8") as html_file:
         html_file.write(final_html_content)
 
-    print(f"Converted {input_file} to {output_file}")
-
+    logger.info(f"Converted {input_file} to {output_file}")
 
 def process_input(input_path, output_dir, stylesheet_url=None):
     if os.path.isfile(input_path):
@@ -64,8 +69,7 @@ def process_input(input_path, output_dir, stylesheet_url=None):
     elif os.path.isdir(input_path):
         process_directory(input_path, output_dir, stylesheet_url)
     else:
-        print(f"Error: {input_path} is not a valid .txt or .md file or directory.")
-
+        logger.error(f"Error: {input_path} is not a valid .txt or .md file or directory.")
 
 def process_directory(input_dir, output_dir, stylesheet_url=None):
     for root, dirs, files in os.walk(input_dir):
@@ -74,7 +78,6 @@ def process_directory(input_dir, output_dir, stylesheet_url=None):
                 create_html_from_file(
                     os.path.join(root, file), output_dir, stylesheet_url
                 )
-
 
 def main():
     parser = argparse.ArgumentParser(
@@ -105,7 +108,7 @@ def main():
     args = parser.parse_args()
 
     if args.version:
-        print("Text2page Tool Version 0.02")
+        logger.info("Text2page Tool Version 0.02")
         return
 
     if not args.path:
@@ -113,7 +116,7 @@ def main():
         return
 
     if not os.path.exists(args.path):
-        print(f"Error: {args.path} does not exist.")
+        logger.error(f"Error: {args.path} does not exist.")
         return
 
     # Remove the existing 'text2page' folder if it exists
@@ -125,18 +128,17 @@ def main():
             try:
                 toml_dict = tomllib.load(toml_config)
             except tomllib.TOMLDecodeError as err:
-                print(f"There was a problem decoding your TOML file: {err}")
+                logger.error(f"There was a problem decoding your TOML file: {err}")
                 sys.exit(-1)
             try:
                 output = toml_dict.get("output", "./text2page")
                 stylesheet = toml_dict.get("stylesheet", "./style.css")
             except KeyError as err:
-                print(f"Error: {err} was not found in your TOML file")
+                logger.error(f"Error: {err} was not found in your TOML file")
                 sys.exit(-1)
             process_input(args.path, output, stylesheet)
     else:
         process_input(args.path, args.output, args.stylesheet)
-
 
 if __name__ == "__main__":
     main()
