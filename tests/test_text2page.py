@@ -1,6 +1,7 @@
 import os
 import unittest
 import shutil
+import toml 
 from text2page import process_input
 
 class TestText2Page(unittest.TestCase):

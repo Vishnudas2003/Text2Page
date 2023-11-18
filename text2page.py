@@ -4,7 +4,7 @@ import os
 import shutil
 import sys
 import markdown
-import tomllib
+import toml as tomllib
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
