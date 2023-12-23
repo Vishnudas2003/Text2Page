@@ -1,6 +1,6 @@
 # Text2page
 
-**Text2page** is a Python command-line tool that simplifies the process of converting plain text files (.txt) into well-structured HTML documents. It intelligently parses your text, identifies paragraphs, and generates valid HTML5 files, making it easy to turn your text-based content into web-ready pages.
+**Text2page** is a Python command-line tool that simplifies the process of converting plain text files (.txt) and markdown (.md) into well-structured HTML documents. It intelligently parses your text, identifies paragraphs, and generates valid HTML5 files, making it easy to turn your text-based content into web-ready pages.
 
 ## Table of Contents
 
